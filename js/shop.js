@@ -78,6 +78,23 @@ var total = 0;
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cart array
+    
+
+    //buscamos el producto por la id => posicion 0 porque el filter devuelve un array
+    const prodSelected=products.filter(products => products.id == id)[0];
+    
+    //comprobamos si está en el array card
+    let encontrado = cart.find(element => element.id === prodSelected.id);
+    if(encontrado != undefined){
+        //producto está en card actualizamos quantity
+       encontrado.quantity++;
+    }else{
+        //producto no está añadimos quantity =1 y hacemos push en cart
+        let element = {...prodSelected};//copia sin referencia
+        element["quantity"]=1;
+        cart.push(element);
+    }
+
 }
 
 // Exercise 2
