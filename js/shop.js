@@ -99,7 +99,9 @@ function buy(id) {
 
 // Exercise 2
 function cleanCart() {
-
+ console.log("borramos carrito");
+ cart = [];
+ console.log("carrito", cart);
 }
 
 // Exercise 3
