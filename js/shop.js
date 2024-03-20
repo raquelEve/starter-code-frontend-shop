@@ -118,29 +118,25 @@ function calculateTotal() {
 // Exercise 4
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
+
     // descuentos en (3) cooking oil => id:1 (20%)
     // descuentos en (10) Instant cupcake mixture => id:3 (30%)
     // cupcake id: 1, name: 'cooking oil', price: 10.5, type: 'grocery',
     //         offer: { number: 3, percent: 20 }
-
-    /*TODO: campo : subtotalWithDiscount en cas que s'apliqui la promoció*/
+    /*add: propiedad: subtotalWithDiscount en cas que s'apliqui la promoció*/
 
 
     cart.forEach((product)=>{ 
-        if(product.id === 1){ //es aceite
-            if(product.quantity>= 3){
-                product.price =product.price-(product.price*0.2);
+
+        if(product.id === 1 || product.id === 3 ){ 
+            
+            if(product.quantity>= product.offer.number){
+                product.subtotalWithDiscount =product.price-(product.price*(product.offer.percent/100));
                 console.log("antes to fixed", product.price);
-                product.price = Number(product.price.toFixed(2)); 
+                product.subtotalWithDiscount = Number( product.subtotalWithDiscount.toFixed(2)); 
             }
             console.log("original",products[product.id-1] );
             console.log("cart", product);
-        }
-        if(product.id === 3){ //es cupcake
-            if(product.quantity>= 10){
-                product.price =product.price-(product.price*0.3); 
-                product.price = Number(product.price.toFixed(2)); 
-            }
         }
 
     })
