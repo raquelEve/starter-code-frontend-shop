@@ -94,7 +94,7 @@ function buy(id) {
         element["quantity"]=1;
         cart.push(element);
     }
-    applyPromotionsCart();
+
 }
 
 // Exercise 2
@@ -105,9 +105,11 @@ function cleanCart() {
 
 // Exercise 3
 function calculateTotal() {
-    // Calculate total price of the cart using the "cartList" array     
-    for (let value of cart) {       
-        total+=value.price;;
+    // Calculate total price of the cart using the "cartList" array
+    console.log("carrito", cart);     
+    for (let value of cart) { 
+        let calculo = value.quantity * value.price;            
+        total+= calculo;
         console.log("value",value);
     }
     console.log("total",total);
@@ -122,6 +124,7 @@ function applyPromotionsCart() {
     //         offer: { number: 3, percent: 20 }
 
     /*TODO: campo : subtotalWithDiscount en cas que s'apliqui la promoció*/
+
 
     cart.forEach((product)=>{ 
         if(product.id === 1){ //es aceite
