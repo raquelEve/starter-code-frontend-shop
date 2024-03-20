@@ -94,7 +94,7 @@ function buy(id) {
         element["quantity"]=1;
         cart.push(element);
     }
-
+    console.log("carito en buy", cart);
 }
 
 // Exercise 2
@@ -106,13 +106,29 @@ function cleanCart() {
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
-    console.log("carrito", cart);     
-    for (let value of cart) { 
-        let calculo = value.quantity * value.price;            
-        total+= calculo;
-        console.log("value",value);
-    }
-    console.log("total",total);
+    //llamamos a los descuentos
+    console.log("total------------------------------------");  
+   
+    applyPromotionsCart();
+    console.log("carrito en total", cart);     
+   
+    cart.forEach ( value => { 
+
+        let calculo=0;
+            //comprobamos si hay ofertas
+            if(value.hasOwnProperty('applyPromotionsCart')){ 
+                calculo = value.quantity * value.applyPromotionsCart;            
+                total+= Number(calculo.toFixed(2));
+                console.log("calculo", calculo);
+            }else{
+                calculo = value.quantity * value.price;            
+                console.log("calculo", calculo);
+                total+= Number(calculo);
+            }
+            console.log("value",value);
+        }
+        )
+        console.log("total",total);
 }
 
 // Exercise 4
@@ -124,33 +140,43 @@ function applyPromotionsCart() {
     // cupcake id: 1, name: 'cooking oil', price: 10.5, type: 'grocery',
     //         offer: { number: 3, percent: 20 }
     /*add: propiedad: subtotalWithDiscount en cas que s'apliqui la promoció*/
-
+  
 
     cart.forEach((product)=>{ 
 
         if(product.id === 1 || product.id === 3 ){ 
-            
-            if(product.quantity>= product.offer.number){
+
+            if(product.quantity >= product.offer.number){
                 product.subtotalWithDiscount =product.price-(product.price*(product.offer.percent/100));
-                console.log("antes to fixed", product.price);
                 product.subtotalWithDiscount = Number( product.subtotalWithDiscount.toFixed(2)); 
             }
             console.log("original",products[product.id-1] );
-            console.log("cart", product);
+            console.log("product", product);
         }
-
     })
-    
-    
-
+    console.log("cart", cart);
 }
 
 // Exercise 5
 function printCart() {
+   
     // Fill the shopping cart modal manipulating the shopping cart dom
-    
+    console.log("cart", cart);
+    let tbody= document.getElementById("cart_list");
+    let acumulaTr="";
+    for (let i =0; i< cart.length; i++){
+            let price =(cart[i].offer == undefined) ? cart[i].price : cart[i].subtotalWithDiscount;
+            let tr= `<tr> 
+                        <th scope="row">${cart[i].name}</th>
+                        <td>${price}</td>
+                        <td>${cart[i].quantity}</td> 
+                        <td>${cart[i].quantity * price}</td>
+                    </tr>`;           
+            acumulaTr+= tr;
+        }
+    tbody.innerHTML= acumulaTr;
 }
-
+  
 
 // ** Nivell II **
 
