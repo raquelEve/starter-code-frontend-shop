@@ -94,19 +94,24 @@ function buy(id) {
         element["quantity"]=1;
         cart.push(element);
     }
-
+    calculateTotal();
 }
 
 // Exercise 2
 function cleanCart() {
  console.log("borramos carrito");
  cart = [];
- console.log("carrito", cart);
 }
 
 // Exercise 3
 function calculateTotal() {
-    // Calculate total price of the cart using the "cartList" array
+    // Calculate total price of the cart using the "cartList" array 
+    
+    for (let value of cart) {       
+        total+=value.price;;
+        console.log("value",value);
+    }
+    console.log("total",total);
 }
 
 // Exercise 4
