@@ -94,7 +94,7 @@ function buy(id) {
         element["quantity"]=1;
         cart.push(element);
     }
-    console.log("carito en buy", cart);
+    // console.log("carito en buy", cart);
 }
 
 // Exercise 2
@@ -116,8 +116,8 @@ function calculateTotal() {
 
         let calculo=0;
             //comprobamos si hay ofertas
-            if(value.hasOwnProperty('applyPromotionsCart')){ 
-                calculo = value.quantity * value.applyPromotionsCart;            
+            if(value.hasOwnProperty('offer')){ 
+                calculo = value.quantity * value.offer.subtotalWithDiscount;            
                 total+= Number(calculo.toFixed(2));
                 console.log("calculo", calculo);
             }else{
@@ -143,12 +143,13 @@ function applyPromotionsCart() {
   
 
     cart.forEach((product)=>{ 
-
-        if(product.id === 1 || product.id === 3 ){ 
+        console.log(product);
+        if(product.hasOwnProperty("offer") ){ 
+            console.log("entro en ofertas");
 
             if(product.quantity >= product.offer.number){
-                product.subtotalWithDiscount =product.price-(product.price*(product.offer.percent/100));
-                product.subtotalWithDiscount = Number( product.subtotalWithDiscount.toFixed(2)); 
+                product.offer.subtotalWithDiscount =product.price-(product.price*(product.offer.percent/100));
+                product.offer.subtotalWithDiscount = Number( product.offer.subtotalWithDiscount.toFixed(2)); 
             }
             console.log("original",products[product.id-1] );
             console.log("product", product);
@@ -159,22 +160,31 @@ function applyPromotionsCart() {
 
 // Exercise 5
 function printCart() {
-   
+
     // Fill the shopping cart modal manipulating the shopping cart dom
+    //llamamos a calcular total
+    calculateTotal();
     console.log("cart", cart);
     let tbody= document.getElementById("cart_list");
+    let ttotal = document.getElementById("total_price");
     let acumulaTr="";
+    
     for (let i =0; i< cart.length; i++){
-            let price =(cart[i].offer == undefined) ? cart[i].price : cart[i].subtotalWithDiscount;
+            //comprobamos si tiene descuento y ponemos el precio que toque
+            let calcPrice =(!cart[i].hasOwnProperty("offer")) ? cart[i].price : cart[i].offer.subtotalWithDiscount;
+            console.log("price", calcPrice);
+            console.log("tipe proce", typeof(calcPrice));
             let tr= `<tr> 
                         <th scope="row">${cart[i].name}</th>
-                        <td>${price}</td>
+                        <td>${calcPrice}</td>
                         <td>${cart[i].quantity}</td> 
-                        <td>${cart[i].quantity * price}</td>
+                        <td>${cart[i].quantity * calcPrice}</td>
                     </tr>`;           
             acumulaTr+= tr;
         }
-    tbody.innerHTML= acumulaTr;
+        //metemos las tr en la tabla y el total en el span
+        tbody.innerHTML= acumulaTr;
+        ttotal.innerText = total;
 }
   
 
