@@ -85,6 +85,7 @@ function buy(id) {
     
     //comprobamos si está en el array card
     let encontrado = cart.find(element => element.id === prodSelected.id);
+    
     if(encontrado != undefined){
         //producto está en card actualizamos quantity
        encontrado.quantity++;
