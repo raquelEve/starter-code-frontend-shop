@@ -101,13 +101,14 @@ function buy(id) {
 // Exercise 2
 function cleanCart() {
  console.log("borramos carrito");
- cart = [];
+    cart = [];
+    printCart();
 }
 
 // Exercise 3
+//llama a los descuentos applyPromotionsCart();
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
-    //llamamos a los descuentos
     console.log("total------------------------------------");  
    
     applyPromotionsCart();
@@ -116,15 +117,15 @@ function calculateTotal() {
     cart.forEach ( value => { 
 
         let calculo=0;
-            //comprobamos si hay ofertas
-            if(value.hasOwnProperty('offer')){ 
+            //comprobamos si hay preciodescuento
+            if(value.offer.subtotalWithDiscount!= undefined ){ 
                 calculo = value.quantity * value.offer.subtotalWithDiscount;            
                 total+= Number(calculo.toFixed(2));
                 console.log("calculo", calculo);
             }else{
                 calculo = value.quantity * value.price;            
                 console.log("calculo", calculo);
-                total+= Number(calculo);
+                total+= Number(calculo.toFixed(2));
             }
             console.log("value",value);
         }
@@ -141,12 +142,12 @@ function applyPromotionsCart() {
     // cupcake id: 1, name: 'cooking oil', price: 10.5, type: 'grocery',
     //         offer: { number: 3, percent: 20 }
     /*add: propiedad: subtotalWithDiscount en cas que s'apliqui la promoció*/
-  
+    console.log("cart en dtos", cart);
 
     cart.forEach((product)=>{ 
         console.log(product);
         if(product.hasOwnProperty("offer") ){ 
-            console.log("entro en ofertas");
+            console.log("entro en ofertas", product);
 
             if(product.quantity >= product.offer.number){
                 product.offer.subtotalWithDiscount =product.price-(product.price*(product.offer.percent/100));
@@ -196,6 +197,8 @@ function removeFromCart(id) {
 
 }
 
+
 function open_modal() {
+    calculateTotal();
     printCart();
 }
