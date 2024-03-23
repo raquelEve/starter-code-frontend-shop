@@ -95,12 +95,10 @@ function buy(id) {
         element["quantity"]=1;
         cart.push(element);
     }
-    // console.log("carito en buy", cart);
 }
 
 // Exercise 2
 function cleanCart() {
- console.log("borramos carrito");
     cart = [];
     printCart();
 }
@@ -109,28 +107,22 @@ function cleanCart() {
 //llama a los descuentos applyPromotionsCart();
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
-    console.log("total------------------------------------");  
    
+    total = 0;
     applyPromotionsCart();
-    console.log("carrito en total", cart);     
-   
-    cart.forEach ( value => { 
-
-        let calculo=0;
-            //comprobamos si hay preciodescuento
-            if(value.offer.subtotalWithDiscount!= undefined ){ 
-                calculo = value.quantity * value.offer.subtotalWithDiscount;            
-                total+= Number(calculo.toFixed(2));
-                console.log("calculo", calculo);
-            }else{
-                calculo = value.quantity * value.price;            
-                console.log("calculo", calculo);
-                total+= Number(calculo.toFixed(2));
-            }
-            console.log("value",value);
+    cart.forEach(value => {
+        
+        let calculo = 0;
+        //comprobamos si hay preciodescuento
+        if (value.offer != undefined && value.offer.subtotalWithDiscount != undefined) {
+                
+            calculo = value.quantity * value.offer.subtotalWithDiscount;
+            total += Number(calculo.toFixed(2));
+        } else {
+            calculo = value.quantity * value.price;
+            total += Number(calculo.toFixed(2));
         }
-        )
-        console.log("total",total);
+    });
 }
 
 // Exercise 4
@@ -142,22 +134,22 @@ function applyPromotionsCart() {
     // cupcake id: 1, name: 'cooking oil', price: 10.5, type: 'grocery',
     //         offer: { number: 3, percent: 20 }
     /*add: propiedad: subtotalWithDiscount en cas que s'apliqui la promoció*/
-    console.log("cart en dtos", cart);
 
-    cart.forEach((product)=>{ 
-        console.log(product);
-        if(product.hasOwnProperty("offer") ){ 
-            console.log("entro en ofertas", product);
+    cart.forEach((product) => {
+        if (product.hasOwnProperty("offer")) {
 
-            if(product.quantity >= product.offer.number){
-                product.offer.subtotalWithDiscount =product.price-(product.price*(product.offer.percent/100));
-                product.offer.subtotalWithDiscount = Number( product.offer.subtotalWithDiscount.toFixed(2)); 
+            if (product.quantity >= product.offer.number) {
+                product.offer.subtotalWithDiscount = product.price - (product.price * (product.offer.percent / 100));
+                product.offer.subtotalWithDiscount = Number(product.offer.subtotalWithDiscount.toFixed(2));
+            } else {
+                //si existe y no es aplicable la oferta => 
+                if (product.offer.subtotalWithDiscount != undefined) {
+                    delete product.offer.subtotalWithDiscount;
+                }
             }
-            console.log("original",products[product.id-1] );
-            console.log("product", product);
+
         }
-    })
-    console.log("cart", cart);
+    });
 }
 
 // Exercise 5
@@ -166,21 +158,28 @@ function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
     //llamamos a calcular total
     calculateTotal();
-    console.log("cart", cart);
     let tbody= document.getElementById("cart_list");
     let ttotal = document.getElementById("total_price");
     let acumulaTr="";
     
     for (let i =0; i< cart.length; i++){
             //comprobamos si tiene descuento y ponemos el precio que toque
-            let calcPrice =(!cart[i].hasOwnProperty("offer")) ? cart[i].price : cart[i].offer.subtotalWithDiscount;
-            console.log("price", calcPrice);
-            console.log("tipe proce", typeof(calcPrice));
+        let calcPrice = 0;
+        if (cart[i].hasOwnProperty("offer") && cart[i].offer.subtotalWithDiscount != undefined) {
+            calcPrice = cart[i].offer.subtotalWithDiscount;
+        } else {
+            calcPrice = cart[i].price;
+        }
+
             let tr= `<tr> 
                         <th scope="row">${cart[i].name}</th>
                         <td>${calcPrice}</td>
-                        <td>${cart[i].quantity}</td> 
-                        <td>${cart[i].quantity * calcPrice}</td>
+                        <td>
+                        <button onClick="unoMenos(${cart[i].id})" class="quantityButton">-</button>
+                        ${cart[i].quantity}
+                        <button onClick="unoMas(${cart[i].id})" class="quantityButton" >+</button>
+                        </td> 
+                        <td>${(cart[i].quantity * calcPrice).toFixed(2)}</td>
                     </tr>`;           
             acumulaTr+= tr;
         }
@@ -196,7 +195,24 @@ function printCart() {
 function removeFromCart(id) {
 
 }
-
+function unoMenos(id){
+    let producto = cart.find(element => element.id === id);
+    if (producto.quantity > 1) {
+        producto.quantity = --producto.quantity;
+    } else {
+        let productToDelete = cart.findIndex(obj => obj.id === id);
+        cart.splice(productToDelete, 1);
+    }
+    calculateTotal();
+    printCart();
+}
+function unoMas(id){
+    let producto = cart.find(element => element.id === id);
+    producto.quantity++;
+    
+    calculateTotal();
+    printCart();
+}
 
 function open_modal() {
     calculateTotal();

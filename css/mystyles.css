@@ -4,3 +4,24 @@
 .hide{
     display: none !important;
 }
+.table{
+    text-align: center;
+}
+.table td {
+    font-weight: 600;
+    font-size: 18px;
+}
+.table #qty-col{
+    min-width: 100px;
+    text-align: center;
+}
+.table .quantityButton{
+    /* background-color: #0d6efd; */
+    background-color: #cadefc;
+    border-radius: 5px;
+    border: 1px solid #cadefc;
+    padding: 0 6px;
+}
+.table .quantityButton:hover{
+    background-color: #aeccf9;
+}
