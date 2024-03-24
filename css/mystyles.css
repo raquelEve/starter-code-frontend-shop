@@ -1,9 +1,88 @@
+
 .show{
     display: block !important;
 }
 .hide{
     display: none !important;
 }
+
+body{
+    /* background: rgb(218, 230, 245); */
+    background: linear-gradient(180deg, rgb(207, 219, 213) 13%, rgba(255,255,255,1) 44%, rgb(228, 233, 229) 100%);
+}
+
+header h1{
+    
+    font-family: "Marck Script", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+section .card-header {
+    min-height: 280px;
+}
+section .card .card-header{    
+    overflow: hidden;
+}
+section .card:hover .bgimg{    
+    transition: all 1.8s;
+    transform: scale(1.2);
+}
+
+section .card-header img{
+   display: none;
+}
+section .card-body div{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+section .card-body h5{
+   text-transform: uppercase;
+   min-height: 50px;
+}
+
+#grocery .col-12 .bgimg,
+#beauty .col-12 .bgimg,
+#clothes .col-12 .bgimg{
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center center;
+}
+#grocery .col-12:first-child .bgimg{
+    background-image: url('../images/cooking-oil.jpg');
+}
+#grocery .col-12:nth-child(2) .bgimg{
+    background-image: url('../images/pasta.jpg');
+}
+#grocery .col-12:nth-child(3) .bgimg{
+    background-image: url('../images/cupcake.webp');
+}
+#beauty .col-12:first-child .bgimg{
+    background-image: url('../images/all-in-one.jpg');
+}
+#beauty .col-12:nth-child(2) .bgimg{
+    background-image: url('../images/zero.jpg');
+}
+#beauty .col-12:nth-child(3) .bgimg{
+    background-image: url('../images/lip-tint.jpg');
+}
+#clothes .col-12:first-child .bgimg{
+    background-image: url('../images/dress1.jpg');
+    background-position: top center;
+}
+#clothes .col-12:nth-child(2) .bgimg{
+    background-image: url('../images/dress2.jpg');
+}
+#clothes .col-12:nth-child(3) .bgimg{
+    background-image: url('../images/dress3.jpg');
+    background-position: top center;
+}
+
+/**** MODAL *****/
+
 .table{
     text-align: center;
 }
@@ -24,4 +103,67 @@
 }
 .table .quantityButton:hover{
     background-color: #aeccf9;
+}
+/* ************ CHECKOUT ************* */
+
+.row-buttons h3,form div.row{
+    background: #fff;
+}
+form{
+    padding: 1rem;
+}
+
+/******************************[ MEDIAS ]*******************************************/
+
+/************************ SM ≥576px*/
+@media (min-width: 576px) { 
+ /* body{
+    background:pink;
+ } */
+ 
+}
+
+
+/************************ MD ≥768px*/
+@media (min-width: 768px) { 
+    /* body{
+       background:yellow;
+    } */
+    header{
+        background-image: url('../images/shop3png.png');
+        background-size: 200px 200px;
+        background-color: rgba(0, 0, 0, 0.3);
+        background-repeat: no-repeat;
+        background-position: 15px bottom;
+    }
+    
+}
+
+
+/************************ LG ≥992px*/
+@media (min-width: 992px) { 
+    /* body{
+       background:green;
+    } */
+    header{
+        background-position: 50px bottom;
+    }
+}
+
+/************************ XL ≥1200px*/
+@media (min-width: 1200px) {
+    /* body{
+        background:orange;
+    } */
+    header{
+        background-position: 80px bottom;
+    }
+    section .card-header {
+        min-height: 250px;
+    }
+}
+
+/************************ XXL ≥1400px*/
+@media (min-width: 1400px) {
+ 
 }

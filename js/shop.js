@@ -95,12 +95,14 @@ function buy(id) {
         element["quantity"]=1;
         cart.push(element);
     }
+    countElementsCart();
 }
 
 // Exercise 2
 function cleanCart() {
     cart = [];
     printCart();
+    countElementsCart(); 
 }
 
 // Exercise 3
@@ -205,6 +207,7 @@ function unoMenos(id){
     }
     calculateTotal();
     printCart();
+    countElementsCart();
 }
 function unoMas(id){
     let producto = cart.find(element => element.id === id);
@@ -212,9 +215,18 @@ function unoMas(id){
     
     calculateTotal();
     printCart();
+    countElementsCart(); 
 }
 
 function open_modal() {
     calculateTotal();
     printCart();
+}
+function countElementsCart() {
+    let count = 0;
+    for (const product of cart) {
+        count += product.quantity;  
+    }
+    countProduct = document.getElementById("count_product");
+    countProduct.innerText = count;
 }
